@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaFlow AI | Real Estate AI Assistant & Automation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #090d16;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(9, 13, 22, 0.95);
+            border-bottom: 1px solid #1e293b;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn {
+            background: linear-gradient(90deg, #0284c7, #4f46e5);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .hero {
+            text-align: center;
+            padding: 100px 8% 80px;
+            background: radial-gradient(circle at top, #1e1b4b 0%, #090d16 70%);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            max-width: 820px;
+            margin: 0 auto 20px;
+            line-height: 1.2;
+        }
+        .hero span {
+            color: #38bdf8;
+        }
+        .hero p {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto 35px;
+        }
+        .section {
+            padding: 70px 8%;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: #111827;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #1f2937;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-color: #38bdf8;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #38bdf8;
+        }
+        .card p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+        .demo-box {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 50px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .demo-box h2 {
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+        .demo-box p {
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, textarea {
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #111827;
+            color: white;
+            font-size: 1rem;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* --- REAL ESTATE AI CHATBOT WIDGET --- */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #0284c7, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 22px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 25px;
+            width: 360px;
+            max-width: 92vw;
+            height: 490px;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        .chat-header {
+            background: linear-gradient(90deg, #0284c7, #4f46e5);
+            padding: 15px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+        .chat-header span {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 6px;
+        }
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.92rem;
+        }
+        .msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 84%;
+            word-wrap: break-word;
+        }
+        .bot-msg {
+            background: #1e293b;
+            color: #f1f5f9;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .user-msg {
+            background: #0284c7;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .quick-btn {
+            background: #0f172a;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 6px 11px;
+            border-radius: 15px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .quick-btn:hover {
+            background: #38bdf8;
+            color: #090d16;
+        }
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid #1f2937;
+            padding: 10px;
+            background: #0f172a;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        .chat-input-area button {
+            background: #38bdf8;
+            color: #090d16;
+            border: none;
+            padding: 0 15px;
+            margin-left: 8px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">NexaFlow AI</div>
+        <a href="#contact" class="btn">Get Custom Real Estate Bot</a>
+    </header>
+
+    <section class="hero">
+        <h1>24/7 AI Concierge for <span>Real Estate Agencies</span></h1>
+        <p>Capture buyer & seller leads automatically, answer property questions instantly, and book property viewings while you sleep.</p>
+        <button onclick="toggleChat()" class="btn">Test Live Real Estate AI Bot</button>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">How Our AI Helps Realtors</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🏠 Instant Property Matching</h3>
+                <p>Our AI asks buyers about their budget, location, and bedroom requirements, then recommends matching listings immediately.</p>
+            </div>
+            <div class="card">
+                <h3>📅 Automated Site Visit Booking</h3>
+                <p>Visitors can schedule in-person or virtual property tours 24/7 directly inside the chat without waiting for an agent.</p>
+            </div>
+            <div class="card">
+                <h3>💰 Seller Lead & Valuation Capture</h3>
+                <p>Homeowners looking to sell can request a free property valuation, automatically sending their details straight to your CRM.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="demo">
+        <div class="demo-box">
+            <h2>Try Our Real Estate AI Demo</h2>
+            <p>Click the chat icon in the bottom-right corner to experience how our AI Assistant handles buyers, renters, and property viewings.</p>
+            <button onclick="toggleChat()" class="btn">Launch Real Estate Demo</button>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <h2 class="section-title">Get This AI Bot For Your Agency</h2>
+        <form class="contact-form" action="https://formsubmit.co" method="POST">
+            <input type="text" name="name" placeholder="Agent / Agency Name" required>
+clientData.interest = 'Buying Property';
+flowStep = 1;
+appendMessage("🏡 We have luxury villas, modern apartments, and commercial plots available! What is your preferred location and budget range?", 'bot');
+} else if (lowerText.includes('rent') || lowerText.includes('lease')) {
+clientData.interest = 'Renting Property';
+flowStep = 1;
+appendMessage("🔑 Looking to rent? Let me help! How many bedrooms do you need and what is your monthly rent budget?", 'bot');
+} else if (lowerText.includes('visit') || lowerText.includes('book') || lowerText.includes('viewing') || lowerText.includes('tour')) {
+clientData.interest = 'Property Viewing / Site Visit';
+flowStep = 1;
+appendMessage("📅 I'd love to arrange a private viewing! Which property type or preferred day/time works best for you?", 'bot');
+} else if (lowerText.includes('sell') || lowerText.includes('valuation') || lowerText.includes('value')) {
+clientData.interest = 'Property Valuation / Selling';
+flowStep = 1;
+appendMessage("💰 Thinking of selling? We offer a Free Market Valuation! Please share your property location and size (e.g., 3-Bed House, 10 Marla).", 'bot');
+} else if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('location')) {
+appendMessage("📍 Our listings start from $150,000 for modern apartments up to $1.2M+ for luxury villas. Would you like to Book a Viewing or check Buy/Rent options?", 'bot');
+} else {
+appendMessage("I can help you Buy, Rent, Sell, or Book a Site Visit! Click any option below or type your requirement:<button class='quick-btn' onclick="handleQuickReply('Buy a Property')">🏡 Buy<button class='quick-btn' onclick="handleQuickReply('Rent a Home')">🔑 Rent<button class='quick-btn' onclick="handleQuickReply('Book Site Visit')">📅 Book Visit", 'bot');
+}
+}
