@@ -324,3 +324,20 @@
         <h2 class="section-title">Get This AI Bot For Your Agency</h2>
         <form class="contact-form" action="https://formsubmit.co" method="POST">
             <input type="text" name="name" placeholder="Agent / Agency Name" required>
+            apartments, and commercial plots available! What is your preferred location and budget range?", 'bot');
+} else if (lowerText.includes('rent') || lowerText.includes('lease')) {
+clientData.interest = 'Renting Property';
+flowStep = 1;
+appendMessage("🔑 Looking to rent? Let me help! How many bedrooms do you need and what is your monthly rent budget?", 'bot');
+} else if (lowerText.includes('visit') || lowerText.includes('book') || lowerText.includes('viewing') || lowerText.includes('tour')) {
+clientData.interest = 'Property Viewing / Site Visit';
+flowStep = 1;
+appendMessage("📅 I'd love to arrange a private viewing! Which property type or preferred day/time works best for you?", 'bot');
+} else if (lowerText.includes('sell') || lowerText.includes('valuation') || lowerText.includes('value')) {
+clientData.interest = 'Property Valuation / Selling';
+flowStep = 1;
+appendMessage("💰 Thinking of selling? We offer a Free Market Valuation! Please share your property location and size (e.g., 3-Bed House, 10 Marla).", 'bot');
+} else if (lowerText.includes('price') || lowerText.includes('cost') || lowerText.includes('location')) {
+appendMessage("📍 Our listings start from $150,000 for modern apartments up to $1.2M+ for luxury villas. Would you like to Book a Viewing or check Buy/Rent options?", 'bot');
+} else {
+appendMessage("I can help you Buy, Rent, Sell, or Book a Site Visit! Click any option below or type your requirement:<button class='quick-btn' onclick="handleQuickReply('Buy a Property')">🏡 Buy<button class='quick-btn' onclick="handleQuickReply('Rent a Home')">🔑 Rent<button class='quick-btn' onclick="handleQuickReply('Book Site Visit')">📅 Book Visit", 'bot');
